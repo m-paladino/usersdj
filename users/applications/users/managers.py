@@ -33,8 +33,21 @@ class UserManager(BaseUserManager, models.Manager):
         user.save(using=self.db)
 
 
-    def create_user():
-        pass
+    def create_user(self, username, email, password=None, **extra_fields):
+        """
+        Creates and saves a User with the given username, email, and password.
+
+        Args:
+            username (str): The username for the new user.
+            email (str): The email address for the new user.
+            password (str, optional): The password for the new user. Defaults to None.
+            **extra_fields: Additional fields to be saved in the User model.
+
+        Returns:
+            User: The newly created User object.
+        """
+        return self._create_user(username, email, password, False, False, **extra_fields)
+
 
     def create_superuser(self, username, email, password=None, **extra_fields):
         """
