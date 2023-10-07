@@ -3,3 +3,25 @@ users/secret.json
 
 # virtual environment
 venv/
+
+# Ignore Python bytecode files
+__pycache__/
+
+# Ignore media files
+media/
+
+# Ignore static files (if not using a CDN)
+static/
+
+# Ignore log files
+*.log
+
+# Ignore compiled Python files
+*.pyc
+
+# Ignore system-generated files (e.g., .DS_Store on macOS)
+.DS_Store
+
+# Ignore editor/IDE-specific files
+.vscode/
+.idea/
