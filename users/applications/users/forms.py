@@ -37,3 +37,25 @@ class UserRegisterForm(forms.ModelForm):
     def clean_password1(self):
         if len(self.cleaned_data['password1']) < 5:
             self.add_error('password1', 'Password must be at least 5 characters long')
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(
+        label='username',
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'username'
+            }
+        )
+    )
+
+    password = forms.CharField(
+        label='Password',
+        required=True,
+        widget=forms.PasswordInput(
+            attrs={
+                'placeholder': 'Enter your password'
+            }
+        )
+    )
