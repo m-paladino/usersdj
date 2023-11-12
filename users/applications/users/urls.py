@@ -19,4 +19,9 @@ urlpatterns = [
         views.LogoutView.as_view(),
         name='logout'
     ),
+    path(
+        'update_password/',
+        views.UpdatePasswordView.as_view(),
+        name='update_password'
+    ),
 ]

@@ -10,7 +10,7 @@
     <h3>Welcome: {{user}}</h3>
     <ul>
         <li><a href="{% url 'users_app:logout' %}">Logout</a></li>
-        <li><a href="#">Update info</a></li>
+        <li><a href="{% url 'users_app:update_password' %}">Update info</a></li>
     </ul>
 </body>
 </html>
