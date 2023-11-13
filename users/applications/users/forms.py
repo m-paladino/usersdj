@@ -30,14 +30,17 @@ class UserRegisterForm(forms.ModelForm):
         fields = ('username', 'email', 'names', 'last_names', 'gender')
 
 
-    def clean_password2(self):
-        if self.cleaned_data['password1'] != self.cleaned_data['password2']:
-            self.add_error('password2', 'Passwords do not match')
-
-
     def clean_password1(self):
         if len(self.cleaned_data['password1']) < 5:
             self.add_error('password1', 'Password must be at least 5 characters long')
+        return self.cleaned_data['password1']
+
+
+    def clean_password2(self):
+        if self.cleaned_data['password1'] != self.cleaned_data['password2']:
+            self.add_error('password2', 'Passwords do not match')
+        return self.cleaned_data['password2']
+
 
 
 class LoginForm(forms.Form):
@@ -135,3 +138,24 @@ class UpdatePasswordForm(forms.Form):
         if self.cleaned_data['password1'] != self.cleaned_data['password2']:
             self.add_error('password2', 'Passwords do not match')
         return self.cleaned_data['password2']
+
+
+class UserVerificationForm(forms.Form):
+    code = forms.CharField(required=True)
+
+
+    def __init__(self, pk, *args, **kwargs):
+        self.user_id = pk
+        super(UserVerificationForm, self).__init__(*args, **kwargs)
+
+    def clean_code(self):
+        code = self.cleaned_data['code']
+        if len(code) == 6:
+            is_valid = User.objects.validate_user_code(
+                self.user_id,
+                code
+            )
+            if not is_valid:
+                raise forms.ValidationError('The code is not valid')
+            return code
+        raise forms.ValidationError('The code must be 6 characters long')
